@@ -21,9 +21,9 @@ TodoApp
 	- TodoForm
 */
 var todoItems = [];
-todoItems.push({index: 1, value: "learn react", done: false, date: new Date()});
-todoItems.push({index: 2, value: "Go shopping", done: true, date: new Date()});
-todoItems.push({index: 3, value: "buy flowers", done: true, date: new Date()});
+// todoItems.push({index: 1, value: "learn react", done: false, createdDate: new Date(), completedDate: new Date()});
+// todoItems.push({index: 2, value: "Go shopping", done: true, createdDate: new Date(), completedDate: new Date()});
+// todoItems.push({index: 3, value: "buy flowers", done: true, createdDate: new Date(), completedDate: new Date()});
 // console.log(todoItems);
 class TodoList extends React.Component {
   render () {
@@ -37,11 +37,11 @@ class TodoList extends React.Component {
     	<h2>Your ToDo List</h2>
     	<div className="filter-block">
     		<label>Filter By</label>
-    		<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
+    		<div className="btn-group btn-group-sm" role="group" aria-label="Basic example">
 			  <button type="button" className="btn btn-secondary" onClick={this.props.sortCreatedOld}>Created (Oldest)</button>
 			  <button type="button" className="btn btn-secondary" onClick={this.props.sortCreatedNew}>Created (Latest)</button>
-			  <button type="button" className="btn btn-secondary">Completed (Oldest)</button>
-			  <button type="button" className="btn btn-secondary">Completed (Latest)</button>
+			  <button type="button" className="btn btn-secondary" onClick={this.props.sortCompletedOld}>Completed (Oldest)</button>
+			  <button type="button" className="btn btn-secondary" onClick={this.props.sortCompletedNew}>Completed (Latest)</button>
 			</div>
     	</div>
       	<ul className="list-group"> {items} </ul>
@@ -129,6 +129,8 @@ class TodoApp extends React.Component {
     this.markTodoDone = this.markTodoDone.bind(this);
     this.sortCreatedOld = this.sortCreatedOld.bind(this);
     this.sortCreatedNew = this.sortCreatedNew.bind(this);
+    this.sortCompletedOld = this.sortCompletedOld.bind(this);
+    this.sortCompletedNew = this.sortCompletedNew.bind(this);
     this.state = {todoItems: todoItems};
   }
   addItem(todoItem) {
@@ -136,7 +138,8 @@ class TodoApp extends React.Component {
       index: todoItems.length+1, 
       value: todoItem.newItemValue, 
       done: false,	
-      date: new Date()
+      createdDate: new Date(),
+      completedDate: null
     });
     //console.log(todoItems);
     this.setState({todoItems: todoItems});
@@ -149,16 +152,34 @@ class TodoApp extends React.Component {
     var todo = todoItems[itemIndex];
     todoItems.splice(itemIndex, 1);
     todo.done = !todo.done;
-    todo.done ? todoItems.push(todo) : todoItems.unshift(todo);
+    // todo.done ? todoItems.push(todo) : todoItems.unshift(todo);
+    if(todo.done){
+    	todo.completedDate = new Date();
+    	todoItems.push(todo);
+    } else {
+    	todo.completedDate = null;
+    	todoItems.unshift(todo)
+    }
+    // console.log(todoItems);
     this.setState({todoItems: todoItems});
   }
   sortCreatedOld () {
-  	this.state.todoItems.sort((a,b)=>a.date>b.date);
+  	this.state.todoItems.sort((a,b)=>a.createdDate>b.createdDate);
   	// console.log(todoItems);
   	this.setState({todoItems:todoItems});
   }
   sortCreatedNew () {
-  	this.state.todoItems.sort((a,b)=>a.date<b.date);
+  	this.state.todoItems.sort((a,b)=>a.createdDate<b.createdDate);
+  	// console.log(todoItems);
+  	this.setState({todoItems:todoItems});
+  }
+  sortCompletedOld () {
+  	this.state.todoItems.sort((a,b)=>a.completedDate>b.completedDate);
+  	// console.log(todoItems);
+  	this.setState({todoItems:todoItems});
+  }
+  sortCompletedNew () {
+  	this.state.todoItems.sort((a,b)=>a.completedDate<b.completedDate);
   	// console.log(todoItems);
   	this.setState({todoItems:todoItems});
   }
@@ -167,7 +188,15 @@ class TodoApp extends React.Component {
       <div id="main">
         <TodoHeader />
         <TodoForm addItem={this.addItem} />
-      	<TodoList items={this.props.initItems} removeItem={this.removeItem} markTodoDone={this.markTodoDone} sortCreatedOld={this.sortCreatedOld} sortCreatedNew={this.sortCreatedNew}/>
+      	<TodoList 
+      		items={this.props.initItems} 
+      		removeItem={this.removeItem} 
+      		markTodoDone={this.markTodoDone} 
+      		sortCreatedOld={this.sortCreatedOld} 
+      		sortCreatedNew={this.sortCreatedNew} 
+      		sortCompletedOld={this.sortCompletedOld}
+      		sortCompletedNew={this.sortCompletedNew}
+      	/>
       </div>
     );
   }
