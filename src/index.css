@@ -11,6 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: transparent !important;
 }
 
 code {
@@ -18,7 +19,10 @@ code {
     monospace;
 }
 
-
+html {
+	background: url('bricks.jpg');
+	background-size: cover;
+}
 html, body {
   height: 100%;
   /*color: #61DAFB;
@@ -80,7 +84,7 @@ ul>li:hover {
 }
 
 .undone {
-  color: #61DAFB;
+  color: #00963c;
 }
 
 .icon {
@@ -88,18 +92,35 @@ ul>li:hover {
 }
 .todo-list {
 	padding: 10px;
-	background: rgba(0,0,0,0.5);
+	background: rgba(255,255,255,0.5);
 	border-radius: 5px;
 	box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
 }
 .todo-list h2 {
 	text-align: center;
 	color: #fff;
-	font-weight: 200;
+	font-weight: 500;
 	font-size: 25px;
+	/*-webkit-text-stroke-width: 1px;
+	-webkit-text-stroke-color: #fff;*/
+	text-shadow: 2px 3px 5px rgba(0,0,0,0.8);
 }
 .check {
 	margin-right: 15px;
 	background: transparent;
 	border: none;
+}
+.list-group-item {
+	background:rgba(255, 255, 255, 0.7) !important;
+}
+.filter-block {
+	padding: 5px 0;
+}
+.filter-block label {
+	margin-right: 10px;
+}
+.btn-sm, .btn-group-sm > .btn {
+	font-size: 0.75em !important;
+	background: rgba(255,255,255,0.5);
+	color: #000;
 }
