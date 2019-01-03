@@ -21,9 +21,9 @@ TodoApp
 	- TodoForm
 */
 var todoItems = [];
-// todoItems.push({index: 1, value: "learn react", done: false, createdDate: new Date(), completedDate: new Date()});
-// todoItems.push({index: 2, value: "Go shopping", done: true, createdDate: new Date(), completedDate: new Date()});
-// todoItems.push({index: 3, value: "buy flowers", done: true, createdDate: new Date(), completedDate: new Date()});
+todoItems.push({index: 1, value: "learn react", done: false, createdDate: new Date(), completedDate: new Date()});
+todoItems.push({index: 2, value: "Go shopping", done: true, createdDate: new Date(), completedDate: new Date()});
+todoItems.push({index: 3, value: "buy flowers", done: true, createdDate: new Date(), completedDate: new Date()});
 // console.log(todoItems);
 class TodoList extends React.Component {
   render () {
@@ -131,7 +131,11 @@ class TodoApp extends React.Component {
     this.sortCreatedNew = this.sortCreatedNew.bind(this);
     this.sortCompletedOld = this.sortCompletedOld.bind(this);
     this.sortCompletedNew = this.sortCompletedNew.bind(this);
-    this.state = {todoItems: todoItems};
+    this.displayJSON = this.displayJSON.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = {
+    	todoItems: todoItems,
+    };
   }
   addItem(todoItem) {
     todoItems.unshift({
@@ -183,6 +187,25 @@ class TodoApp extends React.Component {
   	// console.log(todoItems);
   	this.setState({todoItems:todoItems});
   }
+  componentDidMount() {
+    this.refs.jsonValue.focus();
+  }
+  displayJSON () {
+  	// console.log(JSON.stringify(this.state.todoItems));
+  	this.refs.jsonValue.value = JSON.stringify(this.state.todoItems);
+  }
+  handleSubmit (event) {
+  	event.preventDefault();
+    var todoNew = JSON.parse(this.refs.jsonValue.value);
+    if (todoNew){
+	    todoItems.splice(0,todoItems.length);
+	    todoItems.push(...todoNew);
+	    this.setState({todoItems:todoItems});
+	    this.refs.jsonForm.reset();
+    }
+  	// var todoUpdate = JSON.parse(event.target.value);
+  	// this.setState({todoItems: todoUpdate});
+  }
   render() {
     return (
       <div id="main">
@@ -197,6 +220,14 @@ class TodoApp extends React.Component {
       		sortCompletedOld={this.sortCompletedOld}
       		sortCompletedNew={this.sortCompletedNew}
       	/>
+      	<div className="json-area">
+      		<h3 className="text-center">JSON Area</h3>
+	      	<button className="btn btn-sm btn-primary" onClick={this.displayJSON}>Display JSON</button>
+	      	<form ref="jsonForm" onSubmit={this.handleSubmit}>
+	      		<textarea id="jsonarea" placeholder="JSON Value goes here" ref="jsonValue"/>
+	      		<button className="btn btn-danger" type="submit">Update JSON</button>
+	      	</form>
+      	</div>
       </div>
     );
   }
