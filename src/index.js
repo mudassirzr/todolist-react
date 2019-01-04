@@ -21,9 +21,9 @@ TodoApp
 	- TodoForm
 */
 var todoItems = [];
-todoItems.push({index: 1, value: "learn react", done: false, createdDate: new Date(), completedDate: new Date()});
-todoItems.push({index: 2, value: "Go shopping", done: true, createdDate: new Date(), completedDate: new Date()});
-todoItems.push({index: 3, value: "buy flowers", done: true, createdDate: new Date(), completedDate: new Date()});
+// todoItems.push({index: 1, value: "learn react", done: false, createdDate: new Date(), completedDate: new Date()});
+// todoItems.push({index: 2, value: "Go shopping", done: true, createdDate: new Date(), completedDate: new Date()});
+// todoItems.push({index: 3, value: "buy flowers", done: true, createdDate: new Date(), completedDate: new Date()});
 // console.log(todoItems);
 class TodoList extends React.Component {
   render () {
