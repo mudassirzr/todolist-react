@@ -196,12 +196,14 @@ class TodoApp extends React.Component {
   }
   handleSubmit (event) {
   	event.preventDefault();
-    var todoNew = JSON.parse(this.refs.jsonValue.value);
-    if (todoNew){
+  	if(this.refs.jsonValue.value){
+    	var todoNew = JSON.parse(this.refs.jsonValue.value);
 	    todoItems.splice(0,todoItems.length);
 	    todoItems.push(...todoNew);
 	    this.setState({todoItems:todoItems});
 	    this.refs.jsonForm.reset();
+    } else {
+    	alert('JSON field has no value to Update');
     }
   	// var todoUpdate = JSON.parse(event.target.value);
   	// this.setState({todoItems: todoUpdate});
@@ -224,7 +226,7 @@ class TodoApp extends React.Component {
       		<h3 className="text-center">JSON Area</h3>
 	      	<button className="btn btn-sm btn-primary" onClick={this.displayJSON}>Display JSON</button>
 	      	<form ref="jsonForm" onSubmit={this.handleSubmit}>
-	      		<textarea id="jsonarea" placeholder="JSON Value goes here" ref="jsonValue"/>
+	      		<textarea id="jsonarea" placeholder="JSON value goes here" ref="jsonValue"/>
 	      		<button className="btn btn-danger" type="submit">Update JSON</button>
 	      	</form>
       	</div>
