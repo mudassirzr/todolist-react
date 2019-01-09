@@ -187,9 +187,9 @@ class TodoApp extends React.Component {
   	// console.log(todoItems);
   	this.setState({todoItems:todoItems});
   }
-  componentDidMount() {
+  /*componentDidMount() {
     this.refs.jsonValue.focus();
-  }
+  }*/
   displayJSON () {
   	// console.log(JSON.stringify(this.state.todoItems));
   	this.refs.jsonValue.value = JSON.stringify(this.state.todoItems);
